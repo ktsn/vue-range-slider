@@ -51,7 +51,7 @@ export default {
     },
 
     valuePercent () {
-      return (this.actualValue - this._min) / this._max * 100
+      return (this.actualValue - this._min) / (this._max - this._min) * 100
     },
 
     controllerStyle () {
@@ -88,7 +88,7 @@ export default {
     },
 
     valueFromBounds (point: number, width: number) {
-      return (point / width) * (this._max - this._min)
+      return (point / width) * (this._max - this._min) + this._min
     },
 
     round (value: number): number {
