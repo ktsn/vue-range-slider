@@ -2,10 +2,11 @@
   "name": "vue-range-slider",
   "version": "0.0.0",
   "author": "katashin",
-  "description": "Slider component of Vue",
+  "description": "Simple slider component of Vue.js",
   "keywords": [
     "slider",
     "range",
+    "component",
     "Vue"
   ],
   "license": "MIT",

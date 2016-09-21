@@ -1,6 +1,6 @@
 # vue-range-slider
 
-Slider component of Vue
+Simple slider component of Vue.js
 
 ## License
 
