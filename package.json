@@ -22,6 +22,7 @@
   "scripts": {
     "prepublish": "npm run release",
     "clean": "rm -rf dist .tmp",
+    "dev": "run-p watch:cjs watch:example",
     "build": "run-p build:cjs build:dev build:prod",
     "build:cjs": "rollup -c scripts/rollup.config.js -f cjs -o dist/vue-range-slider.cjs.js",
     "build:dev": "cross-env NODE_ENV=development rollup -c scripts/rollup.config.js -f umd -o dist/vue-range-slider.js",
