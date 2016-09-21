@@ -1,10 +1,13 @@
 // @flow
 
-export function relativeMouseOffset (event: MouseEvent, base: HTMLElement): { left: number, top: number } {
+export function relativeMouseOffset (
+  offset: { clientX: number, clientY: number },
+  base: HTMLElement
+): { left: number, top: number } {
   const bounds = base.getBoundingClientRect()
   return {
-    left: event.clientX - bounds.left,
-    top: event.clientY - bounds.top
+    left: offset.clientX - bounds.left,
+    top: offset.clientY - bounds.top
   }
 }
 
