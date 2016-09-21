@@ -26,18 +26,31 @@ export default {
 
   events: {
     mousedown (event: MouseEvent) {
-      event.preventDefault()
       return this.dragStart(event, this.offsetByMouse)
     },
 
     mousemove (event: MouseEvent) {
-      event.preventDefault()
       return this.dragMove(event, this.offsetByMouse)
     },
 
     mouseup (event: MouseEvent) {
-      event.preventDefault()
       return this.dragEnd(event, this.offsetByMouse)
+    },
+
+    touchstart (event: TouchEvent) {
+      return this.dragStart(event, this.offsetByTouch)
+    },
+
+    touchmove (event: TouchEvent) {
+      return this.dragMove(event, this.offsetByTouch)
+    },
+
+    touchend (event: TouchEvent) {
+      return this.dragEnd(event, this.offsetByTouch)
+    },
+
+    touchcancel (event: TouchEvent) {
+      return this.dragEnd(event, this.offsetByTouch)
     }
   },
 
@@ -50,19 +63,27 @@ export default {
       return relativeMouseOffset(event, this.$el)
     },
 
+    offsetByTouch (event: TouchEvent): { left: number, top: number } {
+      const touch = event.touches.length === 0 ? event.changedTouches[0] : event.touches[0]
+      return relativeMouseOffset(touch, this.$el)
+    },
+
     dragStart (event: Event, f: (event: Event) => { left: number, top: number }) {
       if (this.target !== event.target) return
+      event.preventDefault()
       this.isDrag = true
       this.$emit('dragstart', event, f(event), this.target)
     },
 
     dragMove (event: Event, f: (event: Event) => { left: number, top: number }) {
       if (!this.isDrag) return
+      event.preventDefault()
       this.$emit('drag', event, f(event), this.target)
     },
 
     dragEnd (event: Event, f: (event: Event) => { left: number, top: number }) {
       if (!this.isDrag) return
+      event.preventDefault()
       this.isDrag = false
       this.$emit('dragend', event, f(event), this.target)
     }
