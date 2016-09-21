@@ -1,27 +1,7 @@
 // @flow
 
-export function touch (data: Object, path: string[]): void {
-  path.reduce((value, key) => {
-    return value[key] || (value[key] = {})
-  }, data)
-}
-
-export function mergeOnHooks (vnode: any, hooks: any): void {
-  touch(vnode, ['data', 'on'])
-  const onData: { on: { [key: string]: Function }} = vnode.data.on
-
-  Object.keys(hooks).forEach(key => {
-    if (!onData[key]) {
-      onData[key] = hooks[key]
-    } else {
-      onData[key] = [onData[key], hooks[key]]
-    }
-  })
-}
-
-export function relativeMouseOffset (event: MouseEvent): { left: number, top: number } {
-  const el: HTMLElement = (event.currentTarget: any)
-  const bounds = el.getBoundingClientRect()
+export function relativeMouseOffset (event: MouseEvent, base: HTMLElement): { left: number, top: number } {
+  const bounds = base.getBoundingClientRect()
   return {
     left: event.clientX - bounds.left,
     top: event.clientY - bounds.top
