@@ -1,8 +1,8 @@
 <template lang="html">
-  <drag-helper target-selector=".range-slider-controller" @drag="drag" @dragend="dragEnd">
+  <drag-helper target-selector=".range-slider-handler" @drag="drag" @dragend="dragEnd">
     <span class="range-slider">
       <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
-      <span class="range-slider-controller" :style="{ left: valuePercent + '%' }"></span>
+      <span class="range-slider-handler" :style="{ left: valuePercent + '%' }"></span>
     </span>
   </drag-helper>
 </template>
@@ -116,7 +116,7 @@ export default {
   }
 }
 
-.range-slider-controller {
+.range-slider-handler {
   display: block;
   position: absolute;
   top: 50%;
