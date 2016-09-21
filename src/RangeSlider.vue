@@ -2,7 +2,7 @@
   <drag-helper target-selector=".range-slider-controller" @drag="drag" @dragend="dragEnd">
     <span class="range-slider">
       <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
-      <span class="range-slider-controller" :style="controllerStyle"></span>
+      <span class="range-slider-controller" :style="{ left: valuePercent + '%' }"></span>
     </span>
   </drag-helper>
 </template>
@@ -52,12 +52,6 @@ export default {
 
     valuePercent () {
       return (this.actualValue - this._min) / (this._max - this._min) * 100
-    },
-
-    controllerStyle () {
-      return {
-        left: this.valuePercent + '%'
-      }
     }
   },
 
