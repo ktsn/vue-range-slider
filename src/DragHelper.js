@@ -25,9 +25,20 @@ export default {
   },
 
   events: {
-    mousedown: 'mouseStart',
-    mousemove: 'mouseMove',
-    mouseup: 'mouseEnd'
+    mousedown (event: MouseEvent) {
+      event.preventDefault()
+      return this.dragStart(event, this.offsetByMouse)
+    },
+
+    mousemove (event: MouseEvent) {
+      event.preventDefault()
+      return this.dragMove(event, this.offsetByMouse)
+    },
+
+    mouseup (event: MouseEvent) {
+      event.preventDefault()
+      return this.dragEnd(event, this.offsetByMouse)
+    }
   },
 
   methods: {
@@ -35,21 +46,25 @@ export default {
       this.target = this.$el.querySelector(this.targetSelector) || this.$el
     },
 
-    mouseStart (event: MouseEvent) {
+    offsetByMouse (event: MouseEvent): { left: number, top: number } {
+      return relativeMouseOffset(event, this.$el)
+    },
+
+    dragStart (event: Event, f: (event: Event) => { left: number, top: number }) {
       if (this.target !== event.target) return
       this.isDrag = true
-      this.$emit('dragstart', event, relativeMouseOffset(event, this.$el), this.target)
+      this.$emit('dragstart', event, f(event), this.target)
     },
 
-    mouseMove (event: MouseEvent) {
+    dragMove (event: Event, f: (event: Event) => { left: number, top: number }) {
       if (!this.isDrag) return
-      this.$emit('drag', event, relativeMouseOffset(event, this.$el), this.target)
+      this.$emit('drag', event, f(event), this.target)
     },
 
-    mouseEnd (event: MouseEvent) {
+    dragEnd (event: Event, f: (event: Event) => { left: number, top: number }) {
       if (!this.isDrag) return
       this.isDrag = false
-      this.$emit('dragend', event, relativeMouseOffset(event, this.$el), this.target)
+      this.$emit('dragend', event, f(event), this.target)
     }
   },
 
