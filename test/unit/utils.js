@@ -1,5 +1,5 @@
 import assert from 'power-assert'
-import { round } from '../src/utils'
+import { round } from '../../src/utils'
 
 describe('utils', () => {
   describe('round', () => {

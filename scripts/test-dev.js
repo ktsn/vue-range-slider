@@ -1,4 +1,4 @@
-const config = require('./rollup.config.test')
+const config = require('./rollup.config.unit')
 const rollup = require('rollup')
 const watch = require('rollup-watch')
 

@@ -1,5 +1,7 @@
 node_modules/
+*.log*
 
 /dist/
 /.tmp/
+/test/log/
 /example/__build__.js

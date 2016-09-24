@@ -1,0 +1,3 @@
+launch = true
+app.command = npm run dev
+app.port = 8080
