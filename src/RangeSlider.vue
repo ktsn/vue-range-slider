@@ -1,5 +1,9 @@
 <template lang="html">
-  <drag-helper target-selector=".range-slider-handler" @drag="drag" @dragend="dragEnd">
+  <drag-helper
+    target-selector=".range-slider-handler"
+    v-bind:disabled="disabled"
+    @drag="drag"
+    @dragend="dragEnd">
     <span class="range-slider">
       <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
       <span class="range-slider-handler" :style="{ left: valuePercent + '%' }"></span>
@@ -17,6 +21,10 @@ export default {
   props: {
     name: String,
     value: [String, Number],
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     min: {
       type: [String, Number],
       default: 0

@@ -7,7 +7,8 @@ export default {
   mixins: [DocumentEventHelper],
 
   props: {
-    targetSelector: String
+    targetSelector: String,
+    disabled: Boolean
   },
 
   data () {
@@ -69,7 +70,7 @@ export default {
     },
 
     dragStart (event: Event, f: (event: Event) => { left: number, top: number }) {
-      if (this.target !== event.target) return
+      if (this.disabled || this.target !== event.target) return
       event.preventDefault()
       this.isDrag = true
       this.$emit('dragstart', event, f(event), this.target)
