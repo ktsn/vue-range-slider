@@ -1,16 +1,18 @@
 <template lang="html">
-  <drag-helper
-    target-selector=".range-slider-handler"
-    v-bind:disabled="disabled"
-    @drag="drag"
-    @dragend="dragEnd">
-    <span class="range-slider">
-      <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
-      <span class="range-slider-rail"></span>
-      <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
-      <span class="range-slider-handler" :style="{ left: valuePercent + '%' }"></span>
-    </span>
-  </drag-helper>
+  <span class="range-slider">
+    <drag-helper
+      target-selector=".range-slider-knob"
+      v-bind:disabled="disabled"
+      @drag="drag"
+      @dragend="dragEnd">
+      <span class="range-slider-inner">
+        <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
+        <span class="range-slider-rail"></span>
+        <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
+        <span class="range-slider-knob" :style="{ left: valuePercent + '%' }"></span>
+      </span>
+    </drag-helper>
+  </span>
 </template>
 
 <script>
@@ -107,11 +109,28 @@ export default {
 </script>
 
 <style lang="scss">
+$slider-height: 20px;
+$slider-width: 130px;
+$rail-height: 4px;
+$knob-size: 20px;
+
+$rail-color: #e2e2e2;
+$rail-fill-color: #21fb92;
+$knob-color: #fff;
+
+$knob-border: 1px solid #f5f5f5;
+$knob-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+
 .range-slider {
   display: inline-block;
+  padding: 0 ($knob-size / 2);
+}
+
+.range-slider-inner {
+  display: block;
   position: relative;
-  height: 20px;
-  width: 130px;
+  height: $slider-height;
+  width: $slider-width;
 }
 
 .range-slider-rail,
@@ -120,29 +139,34 @@ export default {
   position: absolute;
   top: 50%;
   left: 0;
-  height: 4px;
+  height: $rail-height;
+  border-radius: $rail-height / 2;
   transform: translateY(-50%);
 }
 
 .range-slider-rail {
   width: 100%;
-  background-color: #ccc;
+  background-color: $rail-color;
 }
 
 .range-slider-fill {
-  background-color: cyan;
+  background-color: $rail-fill-color;
 }
 
-.range-slider-handler {
+.range-slider-knob {
   display: block;
   position: absolute;
   top: 50%;
   left: 0;
-  margin-top: -10px;
-  margin-left: -5px;
-  height: 20px;
-  width: 10px;
-  background-color: #aaa;
+  box-sizing: border-box;
+  height: $knob-size;
+  width: $knob-size;
+  border: $knob-border;
+  border-radius: 50%;
+  background-color: $knob-color;
+  box-shadow: $knob-shadow;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
 }
 
 .range-slider-hidden {
