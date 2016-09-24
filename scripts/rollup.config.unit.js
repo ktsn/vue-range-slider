@@ -8,7 +8,7 @@ const globals = require('rollup-plugin-node-globals')
 const builtins = require('rollup-plugin-node-builtins')
 
 module.exports = {
-  entry: 'test/**/*.js',
+  entry: 'test/unit/**/*.js',
   dest: '.tmp/test.js',
   format: 'iife',
   moduleName: 'TEST',

@@ -1,11 +1,11 @@
 import assert from 'power-assert'
-import { round } from '../src/utils'
+import { round } from '../../src/utils'
 
 describe('utils', () => {
   describe('round', () => {
     it('min, max', () => {
-      assert(round(-1, 0, 50, 2) === 0)
-      assert(round(11, 0, 10, 2) === 10)
+      assert(round(19, 20, 51, 3) === 20)
+      assert(round(52, 20, 51, 3) === 50)
     })
 
     it('do not touch the value on the multiple of step', () => {
