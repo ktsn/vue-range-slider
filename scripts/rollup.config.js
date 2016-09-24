@@ -21,7 +21,7 @@ const moduleName = 'VueRangeSlider'
 const plugins = [
   vue({
     compileTemplate: true,
-    css (styles) {
+    css: !process.env.NODE_ENV && (styles => {
       const out = path.resolve(__dirname, '../dist/vue-range-slider.css')
       sass.render({
         data: styles,
@@ -34,7 +34,7 @@ const plugins = [
         }
         fs.writeFile(out, result.css)
       })
-    }
+    })
   }),
   babel({
     exclude: 'node_modules/**'

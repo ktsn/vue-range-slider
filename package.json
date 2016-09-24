@@ -24,6 +24,7 @@
     "prepublish": "npm run release",
     "clean": "rm -rf dist .tmp",
     "dev": "run-p watch:cjs watch:example",
+    "dev:test": "run-p watch:test testem",
     "build": "run-p build:cjs build:dev build:prod",
     "build:cjs": "rollup -c scripts/rollup.config.js -f cjs -o dist/vue-range-slider.cjs.js",
     "build:dev": "cross-env NODE_ENV=development rollup -c scripts/rollup.config.js -f umd -o dist/vue-range-slider.js",
@@ -37,10 +38,10 @@
     "lint": "eslint --fix \"@(src|test|scripts|example)/**/*.@(js|vue)\"",
     "testem": "testem",
     "testem:ci": "testem ci --launch PhantomJS",
-    "test": "run-p watch:test testem",
-    "test:ci": "run-s build:test testem:ci",
+    "test": "run-s test:*",
+    "test:unit": "run-s build:test testem:ci",
     "test:e2e": "mocha --compilers js:babel-register test/e2e/example.js",
-    "release": "run-s lint flow test:ci clean build"
+    "release": "run-s lint flow test clean build"
   },
   "devDependencies": {
     "babel-core": "^6.13.2",
