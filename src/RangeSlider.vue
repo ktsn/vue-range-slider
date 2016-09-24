@@ -6,6 +6,8 @@
     @dragend="dragEnd">
     <span class="range-slider">
       <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
+      <span class="range-slider-rail"></span>
+      <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
       <span class="range-slider-handler" :style="{ left: valuePercent + '%' }"></span>
     </span>
   </drag-helper>
@@ -110,18 +112,25 @@ export default {
   position: relative;
   height: 20px;
   width: 130px;
+}
 
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    height: 4px;
-    width: 100%;
-    background-color: #ccc;
-    transform: translateY(-50%);
-  }
+.range-slider-rail,
+.range-slider-fill {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 4px;
+  transform: translateY(-50%);
+}
+
+.range-slider-rail {
+  width: 100%;
+  background-color: #ccc;
+}
+
+.range-slider-fill {
+  background-color: cyan;
 }
 
 .range-slider-handler {
