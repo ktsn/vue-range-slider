@@ -48,7 +48,7 @@ export default {
   data () {
     return {
       name: null,
-      value: 0,
+      value: undefined,
       min: 0,
       max: 100,
       step: 1,

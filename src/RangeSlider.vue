@@ -45,8 +45,23 @@ export default {
 
   data () {
     return {
-      actualValue: Number(this.value) || Number(this.min) || 0
+      actualValue: null
     }
+  },
+
+  created () {
+    const { _min: min, _max: max } = this
+    let defaultValue = Number(this.value)
+
+    if (this.value == null || isNaN(defaultValue)) {
+      if (min > max) {
+        defaultValue = min
+      } else {
+        defaultValue = (min + max) / 2
+      }
+    }
+
+    this.actualValue = this.round(defaultValue)
   },
 
   computed: {
@@ -69,7 +84,16 @@ export default {
 
   watch: {
     value (newValue) {
-      this.actualValue = Number(newValue)
+      const value = Number(newValue)
+      if (newValue != null && !isNaN(value)) {
+        this.actualValue = this.round(value)
+      }
+    },
+    min () {
+      this.actualValue = this.round(this.actualValue)
+    },
+    max () {
+      this.actualValue = this.round(this.actualValue)
     }
   },
 
