@@ -5,7 +5,7 @@
       v-bind:disabled="disabled"
       @drag="drag"
       @dragend="dragEnd">
-      <span class="range-slider-inner">
+      <span ref="inner" class="range-slider-inner">
         <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
         <span class="range-slider-rail"></span>
         <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
@@ -75,13 +75,13 @@ export default {
 
   methods: {
     drag (event: Event, offset: { left: number, top: number }) {
-      const { offsetWidth } = this.$el
+      const { offsetWidth } = this.$refs.inner
       this.actualValue = this.round(this.valueFromBounds(offset.left, offsetWidth))
       this.emitEvent(this.actualValue)
     },
 
     dragEnd (event: Event, offset: { left: number, top: number }) {
-      const { offsetWidth } = this.$el
+      const { offsetWidth } = this.$refs.inner
       this.actualValue = this.round(this.valueFromBounds(offset.left, offsetWidth))
       this.emitEvent(this.actualValue, true)
     },
