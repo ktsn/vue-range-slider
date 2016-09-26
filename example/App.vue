@@ -1,6 +1,7 @@
 <template>
   <form action="#" method="get">
     <range-slider
+      class="slider"
       v-model="value"
       :name="name"
       :min="min"
@@ -60,3 +61,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.slider {
+  height: 50px;
+  width: 200px;
+}
+</style>

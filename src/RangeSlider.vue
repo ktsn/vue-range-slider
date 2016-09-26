@@ -148,13 +148,15 @@ $knob-shadow: 1px 1px rgba(0, 0, 0, 0.2);
 .range-slider {
   display: inline-block;
   padding: 0 ($knob-size / 2);
+  height: $slider-height;
+  width: $slider-width;
 }
 
 .range-slider-inner {
   display: block;
   position: relative;
-  height: $slider-height;
-  width: $slider-width;
+  height: 100%;
+  width: 100%;
 }
 
 .range-slider-rail,
