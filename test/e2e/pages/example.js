@@ -50,8 +50,8 @@ class ExamplePage {
     this.mouseDownSlider()
     this.browser
       .getElement('.range-slider-knob')
-      // default width that knob can move is 130
-      .movePointerRelativeTo(130 * offsetRatio, 0)
+      // the width that knob can move is 200
+      .movePointerRelativeTo(200 * offsetRatio, 0)
     this.mouseUp()
     return this
   }
