@@ -153,7 +153,7 @@ $knob-shadow: 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .range-slider-inner {
-  display: block;
+  display: inline-block;
   position: relative;
   height: 100%;
   width: 100%;
