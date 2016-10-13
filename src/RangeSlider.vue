@@ -9,6 +9,7 @@
         <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
         <span class="range-slider-rail"></span>
         <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
+        <span class="range-slider-clickarea" @click="clickSet"></span>
         <span class="range-slider-knob" :style="{ left: valuePercent + '%' }"></span>
       </span>
     </drag-helper>
@@ -19,7 +20,7 @@
 // @flow
 
 import DragHelper from './DragHelper'
-import { round } from './utils'
+import { round, relativeMouseOffset } from './utils'
 
 export default {
   props: {
@@ -98,6 +99,14 @@ export default {
   },
 
   methods: {
+
+    clickSet (event: Event) {
+      const { offsetWidth } = this.$refs.inner
+      const mouseOffSet = relativeMouseOffset(event, event.target)
+      this.actualValue = this.round(this.valueFromBounds(mouseOffSet.left, offsetWidth))
+      this.emitEvent(this.actualValue)
+    },
+
     drag (event: Event, offset: { left: number, top: number }) {
       const { offsetWidth } = this.$refs.inner
       this.actualValue = this.round(this.valueFromBounds(offset.left, offsetWidth))
@@ -177,6 +186,18 @@ $knob-shadow: 1px 1px rgba(0, 0, 0, 0.2);
 
 .range-slider-fill {
   background-color: $rail-fill-color;
+}
+
+.range-slider-clickarea {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30%;
+  background-color: transparent;
+  transform: translateY(-50%);
 }
 
 .range-slider-knob {
