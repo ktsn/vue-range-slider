@@ -4,7 +4,15 @@ const babel = require('rollup-plugin-babel')
 const vue = require('rollup-plugin-vue')
 const replace = require('rollup-plugin-replace')
 const sass = require('node-sass')
+const autoprefixer = require('autoprefixer')
+const postcss = require('postcss')
 const meta = require('../package.json')
+
+const prefixer = postcss([
+  autoprefixer({
+    browsers: ['> 1%', 'last 2 versions', 'IE >= 9']
+  })
+])
 
 const banner = `/*!
  * ${meta.name} v${meta.version}
@@ -23,6 +31,8 @@ const plugins = [
     compileTemplate: true,
     css: !process.env.NODE_ENV && (styles => {
       const out = path.resolve(__dirname, '../dist/vue-range-slider.css')
+
+      // sass
       sass.render({
         data: styles,
         outputStyle: 'expanded',
@@ -32,7 +42,14 @@ const plugins = [
           console.error(formatSassError(error))
           return
         }
-        fs.writeFile(out, result.css)
+
+        // autoprefixer
+        prefixer.process(result.css).then(result => {
+          result.warnings().forEach(warn => {
+            console.warn(warn.toString())
+          })
+          fs.writeFile(out, result.css)
+        })
       })
     })
   }),
