@@ -36,7 +36,9 @@ class ExamplePage {
   mouseDownSlider () {
     this.browser
       .getElement('.range-slider-knob')
-      .movePointerRelativeTo()
+      // intend to mouse down at center
+      // knob size === 20
+      .movePointerRelativeTo(10, 10)
     this.browser.buttonDown()
     return this
   }
@@ -51,7 +53,8 @@ class ExamplePage {
     this.browser
       .getElement('.range-slider-knob')
       // the width that knob can move is 200
-      .movePointerRelativeTo(200 * offsetRatio, 0)
+      // keep mouse position at the knob center
+      .movePointerRelativeTo(200 * offsetRatio + 10, 10)
     this.mouseUp()
     return this
   }
