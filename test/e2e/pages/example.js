@@ -1,6 +1,7 @@
 class ExamplePage {
   constructor (browser) {
     this.browser = browser
+    this.browser.waitForElementVisible('.range-slider', 5000)
   }
 
   setName (name) {
