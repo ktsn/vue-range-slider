@@ -21,6 +21,6 @@ server.listen(8080, () => {
         .run()
     })
     .then(() => {
-      server.close()
+      process.exit()
     })
 })
