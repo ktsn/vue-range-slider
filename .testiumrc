@@ -1,3 +1,0 @@
-launch = true
-app.command = npm start
-app.port = 8080
