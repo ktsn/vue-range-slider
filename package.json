@@ -38,10 +38,10 @@
     "lint": "eslint --fix \"@(src|test|scripts|example)/**/*.@(js|vue)\"",
     "testem": "testem",
     "testem:ci": "testem ci --launch PhantomJS",
-    "test": "run-s test:*",
+    "test": "run-s lint flow test:*",
     "test:unit": "run-s build:test testem:ci",
     "test:e2e": "npm run build:cjs && node test/e2e/runner.js",
-    "release": "run-s lint flow test clean build"
+    "release": "run-s test clean build"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
