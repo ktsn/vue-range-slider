@@ -18,10 +18,10 @@ module.exports = {
     }
   },
   module: {
-    loaders: [
-      { test: /\.js$/, loader: 'babel', exclude: /(node_modules|dist)/ },
-      { test: /\.css$/, loader: 'style!css' },
-      { test: /\.vue$/, loader: 'vue' }
+    rules: [
+      { test: /\.js$/, loader: 'babel-loader', exclude: /(node_modules|dist)/ },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.vue$/, loader: 'vue-loader' }
     ]
   },
   devServer: {
