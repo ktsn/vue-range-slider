@@ -22,7 +22,6 @@
   },
   "scripts": {
     "prepublish": "npm run release",
-    "start": "run-s build:cjs watch:example",
     "clean": "rm -rf dist .tmp",
     "dev": "run-p watch:cjs watch:example",
     "dev:test": "run-p watch:test testem",
@@ -41,7 +40,7 @@
     "testem:ci": "testem ci --launch PhantomJS",
     "test": "run-s test:*",
     "test:unit": "run-s build:test testem:ci",
-    "test:e2e": "mocha --compilers js:babel-register test/e2e/example.js",
+    "test:e2e": "npm run build:cjs && node test/e2e/runner.js",
     "release": "run-s lint flow test clean build"
   },
   "devDependencies": {
@@ -61,7 +60,7 @@
     "eslint-plugin-flowtype": "^2.4.1",
     "eslint-plugin-html": "^1.5.2",
     "flow-bin": "^0.32.0",
-    "mocha": "^3.0.2",
+    "glob": "^7.1.1",
     "node-sass": "^3.10.0",
     "npm-run-all": "^3.0.0",
     "postcss": "^5.2.4",
@@ -78,9 +77,9 @@
     "rollup-plugin-vue": "^2.2.3",
     "rollup-watch": "^2.5.0",
     "style-loader": "^0.13.1",
+    "testcafe": "^0.10.0",
+    "testcafe-browser-provider-phantomjs": "^1.0.0",
     "testem": "^1.6.0",
-    "testium-driver-sync": "^2.3.0",
-    "testium-mocha": "^1.1.0",
     "uglifyjs": "^2.4.10",
     "vue": "^2.0.0-rc.6",
     "vue-loader": "^9.5.0",

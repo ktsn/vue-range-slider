@@ -1,79 +1,67 @@
-class ExamplePage {
-  constructor (browser) {
-    this.browser = browser
+export default class ExamplePage {
+  constructor (t) {
+    this.t = t
+  }
+
+  get wait () {
+    return this.t
   }
 
   setName (name) {
-    this.browser.setValue('.name', name)
+    this.t = this.t.typeText('.name', name, { replace: true })
     return this
   }
 
   setValue (value) {
-    this.browser.setValue('.value', value)
+    this.t = this.t.typeText('.value', String(value), { replace: true })
     return this
   }
 
   setMin (min) {
-    this.browser.setValue('.min', min)
+    this.t = this.t.typeText('.min', String(min), { replace: true })
     return this
   }
 
   setMax (max) {
-    this.browser.setValue('.max', max)
+    this.t = this.t.typeText('.max', String(max), { replace: true })
     return this
   }
 
   setStep (step) {
-    this.browser.setValue('.step', step)
+    this.t = this.t.typeText('.step', String(step), { replace: true })
     return this
   }
 
   toggleDisabled () {
-    this.browser.click('.disabled')
-    return this
-  }
-
-  mouseDownSlider () {
-    this.browser
-      .getElement('.range-slider-knob')
-      // intend to mouse down at center
-      // knob size === 20
-      .movePointerRelativeTo(10, 10)
-    this.browser.buttonDown()
-    return this
-  }
-
-  mouseUp () {
-    this.browser.buttonUp()
+    this.t = this.t.click('.disabled')
     return this
   }
 
   moveSlider (offsetRatio) {
-    this.mouseDownSlider()
-    this.browser
-      .getElement('.range-slider-knob')
+    this.t = this.t.drag(
+      '.range-slider-knob',
       // the width that knob can move is 200
       // keep mouse position at the knob center
-      .movePointerRelativeTo(200 * offsetRatio + 10, 10)
-    this.mouseUp()
+      200 * offsetRatio,
+      0,
+      { offsetX: 10, offsetY: 10 }
+    )
     return this
   }
 
   getValue () {
-    return this.browser.getElement('.value').get('value')
+    return this.t.select('.value').value
   }
 
   getSliderName () {
-    return this.browser
-      .getElement('.range-slider input')
-      .get('name')
+    return this.t
+      .select('.range-slider input')
+      .then(el => el.getAttribute('name'))
   }
 
   getSliderValue () {
-    return this.browser
-      .getElement('.range-slider input')
-      .get('value')
+    return this.t
+      .select('.range-slider input')
+      .value
   }
 }
-
-module.exports = ExamplePage
