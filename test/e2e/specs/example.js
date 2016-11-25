@@ -7,12 +7,12 @@ fixture`Example`
   .page`http://localhost:8080/`
   .beforeEach(t => page = new ExamplePage(t))
 
-test('default value', async t => {
+test('default value', async () => {
   assert(await page.getSliderValue() === '50')
   assert(await page.getValue() === '')
 })
 
-test('sets name and value to the input field in the slider', async t => {
+test('sets name and value to the input field in the slider', async () => {
   await page
     .setName('some_name')
     .setValue(12)
@@ -22,12 +22,12 @@ test('sets name and value to the input field in the slider', async t => {
   assert(await page.getSliderValue() === '12')
 })
 
-test('updates value by dragging slider', async t => {
+test('updates value by dragging slider', async () => {
   await page.moveSlider(0.25).wait
   assert(await page.getValue() === '75')
 })
 
-test('limits between min and max value', async t => {
+test('limits between min and max value', async () => {
   await page.moveSlider(2).wait
   assert(await page.getSliderValue() === '100')
 
@@ -35,7 +35,7 @@ test('limits between min and max value', async t => {
   assert(await page.getSliderValue() === '0')
 })
 
-test('changes step value', async t => {
+test('changes step value', async () => {
   await page.setValue(20).setStep(50).wait
 
   // should not modify the value by updating step
@@ -49,7 +49,7 @@ test('changes step value', async t => {
 })
 
 
-test('changes min and max value', async t => {
+test('changes min and max value', async () => {
   await page.setStep(1).setValue(0).setMin(30).wait
   // modify to correct value for current min
   assert(await page.getSliderValue() === '30')
@@ -71,7 +71,7 @@ test('changes min and max value', async t => {
   assert(await page.getSliderValue() === '200')
 })
 
-test('disables slider', async t => {
+test('disables slider', async () => {
   await page.setStep(1).setMin(0).setMax(100).setValue(50).wait
 
   await page.toggleDisabled()
