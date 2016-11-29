@@ -30,25 +30,33 @@ const plugins = [
   vue({
     compileTemplate: true,
     css: !process.env.NODE_ENV && (styles => {
-      const out = path.resolve(__dirname, '../dist/vue-range-slider.css')
+      const out = ext => path.resolve(__dirname, '../dist/vue-range-slider.' + ext)
 
-      // sass
-      sass.render({
-        data: styles,
-        outputStyle: 'expanded',
-        outFile: out
-      }, (error, result) => {
+      // save as scss
+      fs.writeFile(out('scss'), styles, error => {
         if (error) {
-          console.error(formatSassError(error))
+          console.error(error)
           return
         }
 
-        // autoprefixer
-        prefixer.process(result.css).then(result => {
-          result.warnings().forEach(warn => {
-            console.warn(warn.toString())
+        // compile scss
+        sass.render({
+          data: styles,
+          outputStyle: 'expanded',
+          outFile: out
+        }, (error, result) => {
+          if (error) {
+            console.error(formatSassError(error))
+            return
+          }
+
+          // autoprefixer
+          prefixer.process(result.css).then(result => {
+            result.warnings().forEach(warn => {
+              console.warn(warn.toString())
+            })
+            fs.writeFile(out('css'), result.css)
           })
-          fs.writeFile(out, result.css)
         })
       })
     })

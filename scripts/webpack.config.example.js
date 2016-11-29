@@ -13,14 +13,15 @@ module.exports = {
       'node_modules'
     ],
     alias: {
-      'vue-range-slider/dist/vue-range-slider.css': 'vue-range-slider.css',
+      'vue-range-slider/dist/vue-range-slider.scss': 'vue-range-slider.scss',
       'vue-range-slider': 'vue-range-slider.cjs.js'
     }
   },
   module: {
     rules: [
+      { enforce: 'pre', test: /\.scss/, loader: 'sass-loader' },
       { test: /\.js$/, loader: 'babel-loader', exclude: /(node_modules|dist)/ },
-      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.s?css$/, loader: 'style-loader!css-loader' },
       { test: /\.vue$/, loader: 'vue-loader' }
     ]
   },
