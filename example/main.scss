@@ -1,0 +1,8 @@
+// customize slider style by changing built-in sass variables
+$slider-height: 50px;
+$slider-width: 200px;
+$rail-height: 5px;
+$rail-color: #e2fae2;
+
+// import built-in sass file
+@import '~vue-range-slider/dist/vue-range-slider.scss';
