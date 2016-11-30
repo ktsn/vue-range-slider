@@ -8,6 +8,10 @@ const autoprefixer = require('autoprefixer')
 const postcss = require('postcss')
 const meta = require('../package.json')
 
+if (!fs.existsSync('dist')) {
+  fs.mkdirSync('dist')
+}
+
 const prefixer = postcss([
   autoprefixer({
     browsers: ['> 1%', 'last 2 versions', 'IE >= 9']
