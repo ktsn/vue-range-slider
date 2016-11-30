@@ -8,6 +8,10 @@ const autoprefixer = require('autoprefixer')
 const postcss = require('postcss')
 const meta = require('../package.json')
 
+if (!fs.existsSync('dist')) {
+  fs.mkdirSync('dist')
+}
+
 const prefixer = postcss([
   autoprefixer({
     browsers: ['> 1%', 'last 2 versions', 'IE >= 9']
@@ -30,25 +34,33 @@ const plugins = [
   vue({
     compileTemplate: true,
     css: !process.env.NODE_ENV && (styles => {
-      const out = path.resolve(__dirname, '../dist/vue-range-slider.css')
+      const out = ext => path.resolve(__dirname, '../dist/vue-range-slider.' + ext)
 
-      // sass
-      sass.render({
-        data: styles,
-        outputStyle: 'expanded',
-        outFile: out
-      }, (error, result) => {
+      // save as scss
+      fs.writeFile(out('scss'), styles, error => {
         if (error) {
-          console.error(formatSassError(error))
+          console.error(error)
           return
         }
 
-        // autoprefixer
-        prefixer.process(result.css).then(result => {
-          result.warnings().forEach(warn => {
-            console.warn(warn.toString())
+        // compile scss
+        sass.render({
+          data: styles,
+          outputStyle: 'expanded',
+          outFile: out
+        }, (error, result) => {
+          if (error) {
+            console.error(formatSassError(error))
+            return
+          }
+
+          // autoprefixer
+          prefixer.process(result.css).then(result => {
+            result.warnings().forEach(warn => {
+              console.warn(warn.toString())
+            })
+            fs.writeFile(out('css'), result.css)
           })
-          fs.writeFile(out, result.css)
         })
       })
     })

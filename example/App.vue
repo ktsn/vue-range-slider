@@ -43,7 +43,6 @@
 
 <script>
 import RangeSlider from 'vue-range-slider'
-import 'vue-range-slider/dist/vue-range-slider.css'
 
 export default {
   data () {
@@ -61,10 +60,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.slider {
-  height: 50px;
-  width: 200px;
-}
-</style>

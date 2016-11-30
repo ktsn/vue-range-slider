@@ -133,17 +133,17 @@ export default {
 </script>
 
 <style lang="scss">
-$slider-height: 20px;
-$slider-width: 130px;
-$rail-height: 4px;
-$knob-size: 20px;
+$slider-height: 20px !default;
+$slider-width: 130px !default;
+$rail-height: 4px !default;
+$knob-size: 20px !default;
 
-$rail-color: #e2e2e2;
-$rail-fill-color: #21fb92;
-$knob-color: #fff;
+$rail-color: #e2e2e2 !default;
+$rail-fill-color: #21fb92 !default;
+$knob-color: #fff !default;
 
-$knob-border: 1px solid #f5f5f5;
-$knob-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+$knob-border: 1px solid #f5f5f5 !default;
+$knob-shadow: 1px 1px rgba(0, 0, 0, 0.2) !default;
 
 .range-slider {
   display: inline-block;
