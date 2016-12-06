@@ -75,7 +75,7 @@ Available props:
 - `disabled` - if true, the slider value cannot be updated.
 - `min` - minimum value of the slider.
 - `max` - maximum value of the slider.
-- `step` - granularity of the slider value. e.g. if this value is 3, the value will be 3, 6, 9, ...
+- `step` - granularity of the slider value. e.g. if this is 3, the slider value will be 3, 6, 9, ...
 
 ### Overwrite Default Styles
 
