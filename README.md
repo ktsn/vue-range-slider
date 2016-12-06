@@ -68,6 +68,15 @@ export default {
 </style>
 ```
 
+Available props:
+
+- `name` - name of the slider input.
+- `value` - current value of the slider.
+- `disabled` - if true, the slider value cannot be updated.
+- `min` - minimum value of the slider.
+- `max` - maximum value of the slider.
+- `step` - granularity of the slider value. e.g. if this value is 3, the value will be 3, 6, 9, ...
+
 ### Overwrite Default Styles
 
 vue-range-slider is built with Sass for its styling. If you want to customize vue-range-slider styles, you can easily do that by configuring Sass variables. Available variables can be seen in [the component file](src/RangeSlider.vue).
