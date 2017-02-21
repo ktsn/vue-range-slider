@@ -9,7 +9,7 @@
         <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
         <span class="range-slider-rail"></span>
         <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
-        <span class="range-slider-knob" :style="{ left: valuePercent + '%' }"></span>
+        <span :data-value="actualValue" class="range-slider-knob" :style="{ left: valuePercent + '%' }"></span>
       </span>
     </drag-helper>
   </span>
@@ -141,6 +141,7 @@ $knob-size: 20px !default;
 $rail-color: #e2e2e2 !default;
 $rail-fill-color: #21fb92 !default;
 $knob-color: #fff !default;
+$knob-label-color: #21fb92 !default;
 
 $knob-border: 1px solid #f5f5f5 !default;
 $knob-shadow: 1px 1px rgba(0, 0, 0, 0.2) !default;
@@ -193,6 +194,30 @@ $knob-shadow: 1px 1px rgba(0, 0, 0, 0.2) !default;
   box-shadow: $knob-shadow;
   transform: translate(-50%, -50%);
   cursor: pointer;
+
+  &::before {
+    content: '';
+    height: 40px;
+    width: 40px;
+    background: $knob-label-color;
+    position: absolute;
+    top: -55px;
+    left: -10px;
+    border-radius: 60px;
+    border-bottom-left-radius: 0;
+    transform: rotate(-45deg);
+  }
+
+  &::after {
+    content: attr(data-value);
+    position: absolute;
+    color: #fff;
+    top: -45px;
+    left: -10px;
+    font-weight: bold;
+    width: 40px;
+    text-align: center;
+  }
 }
 
 .range-slider-hidden {
