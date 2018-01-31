@@ -9,7 +9,10 @@
         <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
         <span class="range-slider-rail"></span>
         <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
-        <span class="range-slider-knob" :style="{ left: valuePercent + '%' }"></span>
+        <span class="range-slider-knob" :style="{ left: valuePercent + '%' }">
+          <!-- @slot knob slot -->
+          <slot name="knob"></slot>
+        </span>
       </span>
     </drag-helper>
   </span>
