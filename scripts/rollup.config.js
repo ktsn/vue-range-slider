@@ -23,12 +23,12 @@ const banner = `/*!
  * ${meta.homepage}
  *
  * @license
- * Copyright (c) 2016 ${meta.author}
+ * Copyright (c) 2016-2018 ${meta.author}
  * Released under the MIT license
  * ${meta.homepage}/blob/master/LICENSE
  */`
 
-const moduleName = 'VueRangeSlider'
+const name = 'VueRangeSlider'
 
 const plugins = [
   vue({
@@ -55,11 +55,15 @@ const plugins = [
           }
 
           // autoprefixer
-          prefixer.process(result.css).then(result => {
+          prefixer.process(result.css, { from: false }).then(result => {
             result.warnings().forEach(warn => {
               console.warn(warn.toString())
             })
-            fs.writeFile(out('css'), result.css)
+            fs.writeFile(out('css'), result.css, err => {
+              if (err) {
+                console.error(err)
+              }
+            })
           })
         })
       })
@@ -78,11 +82,12 @@ if (process.env.NODE_ENV) {
 }
 
 module.exports = {
-  entry: path.resolve(__dirname, '../src/index.js'),
-  useStrict: false,
+  input: path.resolve(__dirname, '../src/index.js'),
   plugins,
-  moduleName,
-  banner
+  output: {
+    name,
+    banner
+  }
 }
 
 function formatSassError(e) {

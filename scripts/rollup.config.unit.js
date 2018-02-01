@@ -8,11 +8,13 @@ const globals = require('rollup-plugin-node-globals')
 const builtins = require('rollup-plugin-node-builtins')
 
 module.exports = {
-  entry: 'test/unit/**/*.js',
-  dest: '.tmp/test.js',
-  format: 'iife',
-  moduleName: 'TEST',
-  sourceMap: true,
+  input: 'test/unit/**/*.js',
+  output: {
+    file: '.tmp/test.js',
+    format: 'iife',
+    name: 'TEST',
+    sourcemap: true,
+  },
   plugins: [
     babel({
       exclude: 'node_modules/**'

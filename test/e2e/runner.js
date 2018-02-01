@@ -11,7 +11,7 @@ const server = new WebpackDevServer(compiler, {
   noInfo: true
 })
 
-server.listen(8080, () => {
+server.listen(8080, 'localhost', () => {
   createTestCafe('localhost', 1337, 1338)
     .then(testCafe => {
       return testCafe

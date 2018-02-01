@@ -1,5 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 
 const postcss = [
@@ -27,20 +26,33 @@ module.exports = {
   },
   module: {
     rules: [
-      { enforce: 'pre', test: /\.scss/, loader: 'sass-loader' },
-      { test: /\.js$/, loader: 'babel-loader', exclude: /(node_modules|dist)/ },
-      { test: /\.s?css$/, loader: 'style-loader!css-loader!postcss-loader' },
-      { test: /\.vue$/, loader: 'vue-loader' }
+      {
+        enforce: 'pre',
+        test: /\.scss/,
+        loader: 'sass-loader'
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /(node_modules|dist)/
+      },
+      {
+        test: /\.s?css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: { postcss }
+          }
+        ]
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }
     ]
   },
-  plugins: [
-    new webpack.LoaderOptionsPlugin({
-      test: /\.s?css$/,
-      options: {
-        postcss
-      }
-    })
-  ],
   devServer: {
     contentBase: './example'
   }

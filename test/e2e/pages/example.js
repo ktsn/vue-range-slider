@@ -1,3 +1,5 @@
+import { Selector } from 'testcafe'
+
 export default class ExamplePage {
   constructor (t) {
     this.t = t
@@ -50,18 +52,14 @@ export default class ExamplePage {
   }
 
   getValue () {
-    return this.t.select('.value').value
+    return Selector('.value').value
   }
 
   getSliderName () {
-    return this.t
-      .select('.range-slider input')
-      .then(el => el.getAttribute('name'))
+    return Selector('.range-slider input').getAttribute('name')
   }
 
   getSliderValue () {
-    return this.t
-      .select('.range-slider input')
-      .value
+    return Selector('.range-slider input').value
   }
 }
