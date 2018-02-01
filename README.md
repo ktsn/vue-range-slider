@@ -78,7 +78,7 @@ Available props:
 - `step` - granularity of the slider value. e.g. if this is 3, the slider value will be 3, 6, 9, ...
 
 Available slots:
-- `knob` - use slot for icons
+- `knob` - slot for replacing knob
 
 ### Overwrite Default Styles
 
