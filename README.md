@@ -77,6 +77,9 @@ Available props:
 - `max` - maximum value of the slider.
 - `step` - granularity of the slider value. e.g. if this is 3, the slider value will be 3, 6, 9, ...
 
+Available slots:
+- `knob` - use slot for icons
+
 ### Overwrite Default Styles
 
 vue-range-slider is built with Sass for its styling. If you want to customize vue-range-slider styles, you can easily do that by configuring Sass variables. Available variables can be seen in [the component file](src/RangeSlider.vue).
