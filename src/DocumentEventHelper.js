@@ -3,12 +3,14 @@
 
 export default {
   created () {
+    if (typeof document === 'undefined') return
     forEachListener(this, (key, listener) => {
       document.addEventListener(key, listener)
     })
   },
 
   beforeDestroy () {
+    if (typeof document === 'undefined') return
     forEachListener(this, (key, listener) => {
       document.removeEventListener(key, listener)
     })
