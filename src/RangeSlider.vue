@@ -1,12 +1,12 @@
 <template lang="html">
-  <span class="range-slider">
+  <span class="range-slider" :class="{ disabled }">
     <drag-helper
       target-selector=".range-slider-knob"
       v-bind:disabled="disabled"
       @drag="drag"
       @dragend="dragEnd">
       <span ref="inner" class="range-slider-inner">
-        <input class="range-slider-hidden" type="text" :name="name" :value="actualValue">
+        <input class="range-slider-hidden" type="text" :name="name" :value="actualValue" :disabled="disabled">
         <span class="range-slider-rail"></span>
         <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
         <span class="range-slider-knob" :style="{ left: valuePercent + '%' }">
@@ -152,6 +152,10 @@ $knob-shadow: 1px 1px rgba(0, 0, 0, 0.2) !default;
   padding: 0 ($knob-size / 2);
   height: $slider-height;
   width: $slider-width;
+}
+
+.range-slider.disabled {
+  opacity: 0.5;
 }
 
 .range-slider-inner {
