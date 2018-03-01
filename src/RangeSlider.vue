@@ -39,6 +39,14 @@ export default {
       type: [String, Number],
       default: 100
     },
+    activeMin: {
+      type: [String, Number],
+      default: 0
+    },
+    activeMax: {
+      type: [String, Number],
+      default: 100
+    },
     step: {
       type: [String, Number],
       default: 1
@@ -102,14 +110,24 @@ export default {
   methods: {
     drag (event: Event, offset: { left: number, top: number }) {
       const { offsetWidth } = this.$refs.inner
-      this.actualValue = this.round(this.valueFromBounds(offset.left, offsetWidth))
-      this.emitEvent(this.actualValue)
+      let value = this.round(this.valueFromBounds(offset.left, offsetWidth));
+ 
+      if (value < this.activeMin) value = this.activeMin
+      if (value > this.activeMax) value = this.activeMax
+ 
+      this.actualValue = value
+      this.emitEvent(this.actualValue);
     },
 
     dragEnd (event: Event, offset: { left: number, top: number }) {
       const { offsetWidth } = this.$refs.inner
-      this.actualValue = this.round(this.valueFromBounds(offset.left, offsetWidth))
-      this.emitEvent(this.actualValue, true)
+      let value = this.round(this.valueFromBounds(offset.left, offsetWidth));
+ 
+      if (value < this.activeMin) value = this.activeMin
+      if (value > this.activeMax) value = this.activeMax
+ 
+      this.actualValue = value
+      this.emitEvent(this.actualValue);
     },
 
     emitEvent(value: number, isDragEnd: ?boolean) {
