@@ -1,5 +1,5 @@
 <template lang="html">
-  <span class="range-slider" :class="{ disabled }">
+  <span class="range-slider" ref="elem" @mousedown="shiftKnob" :class="{ disabled }">
     <drag-helper
       target-selector=".range-slider-knob"
       v-bind:disabled="disabled"
@@ -11,6 +11,9 @@
         <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
         <span class="range-slider-knob" :style="{ left: valuePercent + '%' }">
           <slot name="knob"></slot>
+          <popover>
+            <slot name="popover"></slot>
+          </popover>
         </span>
       </span>
     </drag-helper>
@@ -22,6 +25,7 @@
 
 import DragHelper from './DragHelper'
 import { round } from './utils'
+import popover from './popover.vue'
 
 export default {
   props: {
@@ -125,11 +129,32 @@ export default {
 
     round (value: number): number {
       return round(value, this._min, this._max, this._step)
+    },
+
+    shiftKnob (e: Event) {
+
+      if (['range-slider', 'range-slider-inner', 'range-slider-fill'].some(c => e.path[0].classList.contains(c))) {
+        const x = e.pageX - this.$refs.elem.offsetLeft
+      
+        const percent = Math.floor(x / this.$refs.elem.offsetWidth * 100)
+
+        this.actualValue = this.round((percent / 100 * (this._max - this._min)) + this._min)
+
+        this.emitEvent(this.actualValue, true)
+
+        console.log(e)
+      }
+      
     }
   },
 
   components: {
-    DragHelper
+    DragHelper,
+    popover
+  },
+
+  mounted () {
+    
   }
 }
 </script>
