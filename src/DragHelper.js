@@ -7,7 +7,6 @@ export default {
   mixins: [DocumentEventHelper],
 
   props: {
-    targetSelector: String,
     disabled: Boolean
   },
 
@@ -15,14 +14,6 @@ export default {
     return {
       isDrag: false
     }
-  },
-
-  watch: {
-    target: 'bindTarget'
-  },
-
-  mounted () {
-    this.bindTarget()
   },
 
   events: {
@@ -56,8 +47,14 @@ export default {
   },
 
   methods: {
-    bindTarget () {
-      this.target = this.$el.querySelector(this.targetSelector) || this.$el
+    isInTarget (el: ?HTMLElement): boolean {
+      if (!el) return false
+
+      if (el === this.$el) {
+        return true
+      } else {
+        return this.isInTarget(el.parentElement)
+      }
     },
 
     offsetByMouse (event: MouseEvent): { left: number, top: number } {
@@ -70,23 +67,23 @@ export default {
     },
 
     dragStart (event: Event, f: (event: Event) => { left: number, top: number }) {
-      if (this.disabled || this.target !== event.target) return
+      if (this.disabled || !this.isInTarget(event.target)) return
       event.preventDefault()
       this.isDrag = true
-      this.$emit('dragstart', event, f(event), this.target)
+      this.$emit('dragstart', event, f(event), this.$el)
     },
 
     dragMove (event: Event, f: (event: Event) => { left: number, top: number }) {
       if (!this.isDrag) return
       event.preventDefault()
-      this.$emit('drag', event, f(event), this.target)
+      this.$emit('drag', event, f(event), this.$el)
     },
 
     dragEnd (event: Event, f: (event: Event) => { left: number, top: number }) {
       if (!this.isDrag) return
       event.preventDefault()
       this.isDrag = false
-      this.$emit('dragend', event, f(event), this.target)
+      this.$emit('dragend', event, f(event), this.$el)
     }
   },
 

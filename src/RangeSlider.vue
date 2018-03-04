@@ -1,15 +1,15 @@
 <template lang="html">
   <span class="range-slider" :class="{ disabled }">
     <drag-helper
-      target-selector=".range-slider-knob"
       v-bind:disabled="disabled"
+      @dragstart="dragStart"
       @drag="drag"
       @dragend="dragEnd">
       <span ref="inner" class="range-slider-inner">
         <input class="range-slider-hidden" type="text" :name="name" :value="actualValue" :disabled="disabled">
         <span class="range-slider-rail"></span>
         <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
-        <span class="range-slider-knob" :style="{ left: valuePercent + '%' }">
+        <span class="range-slider-knob" ref="knob" :style="{ left: valuePercent + '%' }">
           <slot name="knob"></slot>
         </span>
       </span>
@@ -100,6 +100,14 @@ export default {
   },
 
   methods: {
+    dragStart (event: Event, offset: { left: number, top: number }) {
+      if (event.target === this.$refs.knob) {
+        return
+      }
+      // If the click is out of knob, move it to mouse position
+      this.drag(event, offset)
+    },
+
     drag (event: Event, offset: { left: number, top: number }) {
       const { offsetWidth } = this.$refs.inner
       this.actualValue = this.round(this.valueFromBounds(offset.left, offsetWidth))
