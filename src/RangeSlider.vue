@@ -11,9 +11,15 @@
         <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
         <span class="range-slider-knob" :style="{ left: valuePercent + '%' }">
           <slot name="knob"></slot>
-          <popover>
+          <popover v-if="!noPopover">
             <slot name="popover"></slot>
           </popover>
+        </span>
+        <span class="range-slider-calibration" v-if="!noCalibration">
+          <span class="calibration-item" v-for="offset in calibrationOffsets" :key="offset" :style="{ left: offset + '%' }">
+            <div>|</div>
+            <span class="calibration-knob">{{(offset / 100 * (_max - _min)) + _min}}</span>
+          </span>
         </span>
       </span>
     </drag-helper>
@@ -46,6 +52,18 @@ export default {
     step: {
       type: [String, Number],
       default: 1
+    },
+    noPopover: {
+      type: Boolean,
+      default: false
+    },
+    noCalibration: {
+      type: Boolean,
+      default: false
+    },
+    calibrationCount: {
+      type: Number,
+      default: 10
     }
   },
 
@@ -85,6 +103,11 @@ export default {
 
     valuePercent () {
       return (this.actualValue - this._min) / (this._max - this._min) * 100
+    },
+
+    calibrationOffsets () {
+      //this can definitely be improved
+      return [0, ...'0'.repeat(this.calibrationCount).split('').map((c, i) => (i + 1))].map(i => i / this.calibrationCount * 100)
     }
   },
 
@@ -224,6 +247,26 @@ $knob-shadow: 1px 1px rgba(0, 0, 0, 0.2) !default;
   box-shadow: $knob-shadow;
   transform: translate(-50%, -50%);
   cursor: pointer;
+}
+
+.range-slider-calibration {
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  box-sizing: border-box;
+
+  .calibration-item {
+    color: #777;
+    display: inline-block;
+    position: absolute;
+    width: 50px;
+
+    .calibration-knob {
+      position: absolute;
+      left: -30%;
+    }
+  }
 }
 
 .range-slider-hidden {
