@@ -1,5 +1,5 @@
 <template lang="html">
-  <span class="range-slider" :class="{ disabled }">
+  <span class="range-slider" ref="elem" @mousedown="shiftKnob" :class="{ disabled }">
     <drag-helper
       v-bind:disabled="disabled"
       @dragstart="dragStart"
@@ -11,6 +11,15 @@
         <span class="range-slider-fill" :style="{ width: valuePercent + '%' }"></span>
         <span class="range-slider-knob" ref="knob" :style="{ left: valuePercent + '%' }">
           <slot name="knob"></slot>
+          <popover v-if="!noPopover">
+            <slot name="popover"></slot>
+          </popover>
+        </span>
+        <span class="range-slider-calibration" v-if="!noCalibration">
+          <span class="calibration-item" v-for="offset in calibrationOffsets" :key="offset" :style="{ left: offset + '%' }">
+            <div>|</div>
+            <span class="calibration-knob">{{(offset / 100 * (_max - _min)) + _min}}</span>
+          </span>
         </span>
       </span>
     </drag-helper>
@@ -22,6 +31,7 @@
 
 import DragHelper from './DragHelper'
 import { round } from './utils'
+import popover from './popover.vue'
 
 export default {
   props: {
@@ -42,6 +52,18 @@ export default {
     step: {
       type: [String, Number],
       default: 1
+    },
+    noPopover: {
+      type: Boolean,
+      default: false
+    },
+    noCalibration: {
+      type: Boolean,
+      default: false
+    },
+    calibrationCount: {
+      type: Number,
+      default: 10
     }
   },
 
@@ -81,6 +103,11 @@ export default {
 
     valuePercent () {
       return (this.actualValue - this._min) / (this._max - this._min) * 100
+    },
+
+    calibrationOffsets () {
+      //this can definitely be improved
+      return [0, ...'0'.repeat(this.calibrationCount).split('').map((c, i) => (i + 1))].map(i => i / this.calibrationCount * 100)
     }
   },
 
@@ -133,11 +160,32 @@ export default {
 
     round (value: number): number {
       return round(value, this._min, this._max, this._step)
+    },
+
+    shiftKnob (e: Event) {
+
+      if (['range-slider', 'range-slider-inner', 'range-slider-fill'].some(c => e.path[0].classList.contains(c))) {
+        const x = e.pageX - this.$refs.elem.offsetLeft
+      
+        const percent = Math.floor(x / this.$refs.elem.offsetWidth * 100)
+
+        this.actualValue = this.round((percent / 100 * (this._max - this._min)) + this._min)
+
+        this.emitEvent(this.actualValue, true)
+
+        console.log(e)
+      }
+      
     }
   },
 
   components: {
-    DragHelper
+    DragHelper,
+    popover
+  },
+
+  mounted () {
+    
   }
 }
 </script>
@@ -207,6 +255,26 @@ $knob-shadow: 1px 1px rgba(0, 0, 0, 0.2) !default;
   box-shadow: $knob-shadow;
   transform: translate(-50%, -50%);
   cursor: pointer;
+}
+
+.range-slider-calibration {
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  box-sizing: border-box;
+
+  .calibration-item {
+    color: #777;
+    display: inline-block;
+    position: absolute;
+    width: 50px;
+
+    .calibration-knob {
+      position: absolute;
+      left: -30%;
+    }
+  }
 }
 
 .range-slider-hidden {
