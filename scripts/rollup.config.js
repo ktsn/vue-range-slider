@@ -33,6 +33,7 @@ const name = 'VueRangeSlider'
 const plugins = [
   vue({
     compileTemplate: true,
+    autoStyles: false,
     css: !process.env.NODE_ENV && (styles => {
       const out = ext => path.resolve(__dirname, '../dist/vue-range-slider.' + ext)
 
