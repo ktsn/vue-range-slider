@@ -67,7 +67,14 @@ export default {
     },
 
     dragStart (event: Event, f: (event: Event) => { left: number, top: number }) {
-      if (this.disabled || !this.isInTarget(event.target)) return
+      if (
+        this.disabled ||
+        (event.button !== undefined && event.button !== 0) ||
+        !this.isInTarget(event.target)
+      ) {
+        return
+      }
+
       event.preventDefault()
       this.isDrag = true
       this.$emit('dragstart', event, f(event), this.$el)
