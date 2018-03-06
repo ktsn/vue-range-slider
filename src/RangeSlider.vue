@@ -47,7 +47,8 @@ export default {
 
   data () {
     return {
-      actualValue: null
+      actualValue: null,
+      dragStartValue: null
     }
   },
 
@@ -101,6 +102,7 @@ export default {
 
   methods: {
     dragStart (event: Event, offset: { left: number, top: number }) {
+      this.dragStartValue = this.actualValue
       if (event.target === this.$refs.knob) {
         return
       }
@@ -111,20 +113,24 @@ export default {
     drag (event: Event, offset: { left: number, top: number }) {
       const { offsetWidth } = this.$refs.inner
       this.actualValue = this.round(this.valueFromBounds(offset.left, offsetWidth))
-      this.emitEvent(this.actualValue)
+      this.emitInput(this.actualValue)
     },
 
     dragEnd (event: Event, offset: { left: number, top: number }) {
       const { offsetWidth } = this.$refs.inner
       this.actualValue = this.round(this.valueFromBounds(offset.left, offsetWidth))
-      this.emitEvent(this.actualValue, true)
+
+      if (this.dragStartValue !== this.actualValue) {
+        this.emitChange(this.actualValue)
+      }
     },
 
-    emitEvent(value: number, isDragEnd: ?boolean) {
+    emitInput(value) {
       this.$emit('input', value)
-      if (isDragEnd) {
-        this.$emit('change', value)
-      }
+    },
+
+    emitChange(value) {
+      this.$emit('change', value)
     },
 
     valueFromBounds (point: number, width: number) {
