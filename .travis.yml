@@ -1,5 +1,14 @@
 language: node_js
 node_js:
-  - "6"
+  - "8"
+dist: trusty
+sudo: required
+addons:
+  apt:
+    sources:
+     - google-chrome
+    packages:
+     - google-chrome-stable
 script:
-  - echo
+  - npm run build
+  - npm run test
