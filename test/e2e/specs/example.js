@@ -82,3 +82,8 @@ test('disables slider', async () => {
     .moveSlider(-1).wait
   assert(await page.getSliderValue() === '0')
 })
+
+test('move knob by clicking rail', async () => {
+  await page.clickRail(0.75).wait
+  assert(await page.getSliderValue() === '75')
+})

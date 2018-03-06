@@ -51,6 +51,16 @@ export default class ExamplePage {
     return this
   }
 
+  clickRail (offsetRatio) {
+    this.t = this.t.click(
+      '.range-slider-inner',
+      {
+        offsetX: 200 * offsetRatio
+      }
+    )
+    return this
+  }
+
   getValue () {
     return Selector('.value').value
   }
