@@ -17,7 +17,7 @@ server.listen(8080, 'localhost', () => {
       return testCafe
         .createRunner()
         .src(glob.sync(path.resolve(__dirname, 'specs/**/*.js')))
-        .browsers(['phantomjs'])
+        .browsers('chrome:headless')
         .run()
     })
     .then(() => {

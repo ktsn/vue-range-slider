@@ -1,5 +1,8 @@
 language: node_js
 node_js:
   - "6"
+addons:
+  chrome: stable
 script:
-  - echo
+  - npm run build
+  - npm run test

@@ -35,7 +35,7 @@ export default class ExamplePage {
   }
 
   toggleDisabled () {
-    this.t = this.t.click('.disabled')
+    this.t = this.t.click('.disabled-input')
     return this
   }
 

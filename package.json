@@ -38,7 +38,7 @@
     "lint": "eslint --fix \"@(src|test|scripts|example)/**/*.@(js|vue)\"",
     "testem": "testem",
     "testem:ci": "testem ci --launch PhantomJS",
-    "test": "run-s lint flow test:unit",
+    "test": "run-s lint flow test:unit test:e2e",
     "test:unit": "run-s build:test testem:ci",
     "test:e2e": "npm run build:cjs && node test/e2e/runner.js",
     "release": "run-s test clean build"

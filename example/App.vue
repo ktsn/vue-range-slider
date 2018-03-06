@@ -36,7 +36,7 @@
 
     <div>
       disabled
-      <input class="disabled" type="checkbox" v-model="disabled">
+      <input class="disabled-input" type="checkbox" v-model="disabled">
     </div>
   </form>
 </template>
