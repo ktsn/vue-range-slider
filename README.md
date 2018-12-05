@@ -1,5 +1,7 @@
 # vue-range-slider
 
+[![vue-range-slider Dev Token](https://badge.devtoken.rocks/vue-range-slider)](https://devtoken.rocks/package/vue-range-slider)
+
 Simple slider component of Vue.js
 
 ## Features
