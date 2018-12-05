@@ -1,5 +1,8 @@
 # vue-range-slider
 
+[![Build Status](https://travis-ci.org/ktsn/vue-range-slider.svg?branch=master)](https://travis-ci.org/ktsn/vue-range-slider)
+[![vue-range-slider Dev Token](https://badge.devtoken.rocks/vue-range-slider)](https://devtoken.rocks/package/vue-range-slider)
+
 Simple slider component of Vue.js
 
 ## Features
