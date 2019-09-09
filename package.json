@@ -77,7 +77,7 @@
     "rollup-plugin-vue": "^3.0.0",
     "rollup-watch": "^4.3.1",
     "sass-loader": "^6.0.7",
-    "style-loader": "^0.20.2",
+    "style-loader": "^1.0.0",
     "testcafe": "^0.19.0",
     "testem": "^2.0.0",
     "uglifyjs": "^2.4.11",
