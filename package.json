@@ -63,7 +63,7 @@
     "node-sass": "^4.7.2",
     "npm-run-all": "^4.1.2",
     "postcss": "^6.0.19",
-    "postcss-loader": "^2.1.1",
+    "postcss-loader": "^3.0.0",
     "power-assert": "^1.4.4",
     "rollup": "^0.56.4",
     "rollup-plugin-babel": "^3.0.3",
